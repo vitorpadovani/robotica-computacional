@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Lista de exercícios da ROS - Robótica Computacional - Insper</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../../../..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../../../equipe.css"><link rel="stylesheet" href="../../../../css/ansi-colours.css"><link rel="stylesheet" href="../../../../css/jupyter-cells.css"><link rel="stylesheet" href="../../../../css/pandas-dataframe.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../../../.."
+           title="Robótica Computacional - Insper"
+           class="ah-logo"
+           aria-label="Robótica Computacional - Insper">
+          Robótica Computacional - Insper
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../../../..">Robótica Computacional 2023/1</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Infra</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/">Comece aqui</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Linux</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/ssd-linux/">Início</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Primeiro boot com SSD</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/ssd-linux/recebi-meu-ssd/">Início</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/ssd-linux/recebi-meu-ssd/windows/">Windows</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/ssd-linux/recebi-meu-ssd/mac-os/">macOS (intel)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/ssd-linux/primeiros-passos/">Meu SSD subiu, e agora?</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/ssd-linux/guia-linux/">Guia básico de Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/ssd-linux/git-e-github/">Configure o seu Git</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Robô Simulado</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/robo-simulado/">Primeiros passos com o Robô Simulado</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Robô TurtleBot3</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/turtlebot3/">Conectando no robô físico</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/aps/">Configuração da APS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../../guias-infra/checagem/">Conferência da Infra</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Módulos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../">Módulos do curso</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">00 - Introdução</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../00-intro/">Sobre o curso</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../00-intro/atividade-dia1/">Atividades dia 1</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../00-intro/recursos-legais/">Para saber mais</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">01 - Imagens e Matrizes</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../01-imagens-e-matrizes/">01 - Imagens e Matrizes</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Atividades</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../01-imagens-e-matrizes/atividade1/">Leitura de imagens</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../01-imagens-e-matrizes/atividade2/">Percorrendo a imagem</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../01-imagens-e-matrizes/atividade3/">Cookbook de Numpy</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../01-imagens-e-matrizes/atividade4/">Segmentação de imagens por cor</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">02 - Modelo de Câmera</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../02-modelo-de-camera/">02 - Modelos de câmera</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Atividades</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../02-modelo-de-camera/atividade1/">Segmentação usando HSV e contornos</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../02-modelo-de-camera/atividade2/">Morfologia matemática</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../02-modelo-de-camera/atividade3/">Demonstração de segmentação</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+      
+        
+  
+    <li>
+      <a href="../../../03-visao/">03 - Visão</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">04 - ROS Básico</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../">04 - ROS básico</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Atividades</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../atividade1/">Simulador do Turtlebot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../atividade2/">Tópicos e mensagens na ROS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../atividade3/">Visualização da ROS</a>
+    </li>
+  
+
+      
+        
+  
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Lista de exercícios da ROS</span>
+      <ul>
+        
+      </ul>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Revisões</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../../revisao-PI/">Revisão PI</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Projetos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../../projeto/">Missão no Lab Ágil</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Módulos</li>
+                  
+                
+                  
+                    <li>04 - ROS Básico</li>
+                  
+                
+                  
+                    <li>Atividades</li>
+                  
+                
+                <li>Lista de exercícios da ROS</li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="exercicios-ros">Exercícios ROS</h1>
+<p>No arquivo <code>base.py</code> fornecemos uma estrutura básica de um script da ROS usando classe no python.</p>
+<p>A função <code>main.py</code> cria um nó com o nome <code>'Controler'</code> e construir um a classe <code>Control()</code>, depois até que o <code>core</code> da ROS seja interrompido vai executar o conteúdo da função <code>Control().control</code> em loop.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">main</span><span class="p">():</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">init_node</span><span class="p">(</span><span class="s1">&#39;Controler&#39;</span><span class="p">)</span>
+    <span class="n">control</span> <span class="o">=</span> <span class="n">Control</span><span class="p">()</span>
+    <span class="n">rospy</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="c1"># Espera 1 segundo para que os publishers e subscribers sejam criados</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">rospy</span><span class="o">.</span><span class="n">is_shutdown</span><span class="p">():</span>
+        <span class="n">control</span><span class="o">.</span><span class="n">control</span><span class="p">()</span>
+</code></pre></div>
+<p>Para fazer com que o nó se inscreva em um tópico deve-se primeiro pegar o tipo de mensagem e então comando com a seguinte estrutura de comando pode se inscrever no tópico:
+<div class="highlight"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">sub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Subscriber</span><span class="p">({</span><span class="n">topico</span><span class="p">},{</span><span class="n">tipo</span> <span class="n">de</span> <span class="n">mensagem</span><span class="p">},</span><span class="bp">self</span><span class="o">.</span><span class="n">callback</span><span class="p">)</span>
+</code></pre></div></p>
+<p>Sempre que uma nova mensagem seja enviada ao tópico “topico”, a função <code>self.callback</code> será executada com esta nova mensagem.</p>
+<p>Para fazer com que um nó publique em um tópico, utilize a seguinte estrutura de comando: </p>
+<div class="highlight"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">pub</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Publisher</span><span class="p">({</span><span class="n">topico</span><span class="p">},{</span><span class="n">tipo</span> <span class="n">de</span> <span class="n">mensagem</span><span class="p">},</span><span class="n">queue_size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</code></pre></div>
+<p>O argumento <code>queue_size</code> indica o tamanho máximo da fila de mensagens. Em condições normais a fila não ultrapassa o tamanho 1, este argumento só é relevante quando o conteúdo da mensagem é muito extenso, como uma imagem.</p>
+<h2 id="q1-publisher">Q1 - Publisher</h2>
+<p>Começando do arquivo <code>publisher.py</code> complete as partes do código com ??? para que o código funcione sem erros. O nó deve publicar uma mensagem no tópico <code>publisher</code> do tipo <code>std_msgs/String</code> contendo o horário atual e um o número da mensagem enviada. Também imprima no terminal uma mensagem utilizando o comando <code>rospy.loginfo</code> com a seguinte estrutura:</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1677878366</span>.175759<span class="o">]</span>:<span class="w"> </span>Ola,<span class="w"> </span>são<span class="w"> </span><span class="m">1677878366175707817</span><span class="w"> </span>e<span class="w"> </span>estou<span class="w"> </span>publicando<span class="w"> </span>pela<span class="w"> </span><span class="m">117</span><span class="w"> </span>vez
+</code></pre></div>
+<p>Utilize o comando <code>rostopic echo publisher</code> para verificar se o exercício está correto.</p>
+<p><strong>DICA 1</strong> - Para pegar o horário atual
+<div class="highlight"><pre><span></span><code><span class="n">tempo</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">tempo_sec</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span>
+</code></pre></div></p>
+<h1 id="q2-subscriber">Q2 - Subscriber</h1>
+<p>Agora vamos trabalhar em um nó que se inscreve no tópico que criamos no exercício anterior. A função <code>callback</code>, deve separar o tempo do contador no conteúdo da mensagem,lembre-se de checar a estrutura da mensagem. A função <code>control</code> deve calcular o tempo que passou e utilizar o comando <code>rospy.loginfo</code> para mostrar o número da mensagem e o delay dela no terminal, como no exemplo a seguir,</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>INFO<span class="o">]</span><span class="w"> </span><span class="o">[</span><span class="m">1677878948</span>.424955<span class="o">]</span>:<span class="w"> </span>Ola,<span class="w"> </span>estou<span class="w"> </span>recebendo<span class="w"> </span>a<span class="w"> </span>mensagem:<span class="w"> </span><span class="m">217</span><span class="w"> </span>e<span class="w"> </span>se<span class="w"> </span>passaram<span class="w"> </span><span class="m">0</span>.005347013<span class="w"> </span>segundos
+</code></pre></div>
+<p><strong>DICA 1</strong> - Pode carregar um valor float referente a um tempo da seguinte forma:
+<div class="highlight"><pre><span></span><code><span class="n">time</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span> <span class="nb">float</span><span class="p">(</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span> <span class="p">)</span> <span class="p">)</span>
+</code></pre></div></p>
+<h1 id="q3-robo-quadrado-deadlock">Q3 - Robô quadrado (Deadlock)</h1>
+<p>Usando o simulador, modifique o arquivo <code>quadrado.py</code> para criar um nó da ROS que faça o robô se mover em uma trajetória que se <strong><em>aproxima</em></strong> de um quadrado.</p>
+<p><strong>DICA 1</strong> - Para fazer o robô se mover, publique uma mensagem para o tópico <code>cmd_vel</code>, verifique o tipo de mensagem que este tópico recebe.</p>
+<p><strong>DICA 2</strong> - Você pode esperar n segundos usando <code>rospy.sleep</code>. Este tipo de controle se chama "Deadlock". É uma forma mais simples de se controlar o robô, mas "trava" o código, deixando o roubo menos reativo.</p>
+<h1 id="q4-robo-quase-indeciso">Q4 Robô Quase Indeciso</h1>
+<p>Usando o simulador e o LIDAR simulado, modifique o arquivo <code>indeciso.py</code>, faça com que o robô se afaste da parede quando o obstáculo à sua frente estiver a menos de <code>0.95m</code> e se aproximar quando estiver a mais de <code>1.05m</code>, caso contrário, o robô deve ficar parado. Portanto o robô deve parar eventualmente.</p>
+<p><strong>DICA</strong> Recorte a mensagem do laser para observar um limiar de &plusmn;5&deg; e avalie com base no menor valor desse limiar.</p>
+<p>Deixamos no arquivo a função que recebe os dados do LIDAR.
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">laser_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">LaserScan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">laser_msg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">msg</span><span class="o">.</span><span class="n">ranges</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">laser_msg</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">laser_msg</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">inf</span>
+</code></pre></div>
+Esta função será chamada sempre que uma mensagem for publicada no tópico <code>/scan</code>. O conteúdo da mensagem será convertido para np.array e o valor é arredondado para 2 casas decimais. </p>
+<p>Como no robô simulado um objeto muito longe tem o valor np.inf e no robô real tem o valor 0. a segunda linha do <code>laser_callback</code> serve para fazer a padronização dos valores.</p>
+<h1 id="q5-image-subscriber">Q5 Image Subscriber</h1>
+<p>Em projetos mais complexos da ROS, separar o código em módulos é uma boa prática para manter o projeto organizado e bem estruturado. Um módulo muito utilizado seria o módulo da visão, onde todos os processamentos de imagem são executados por um nó, que publica apenas as informações relevantes da imagem, como por exemplo, coordenadas do alvo.
+Neste exercício vamos trabalhar no arquivo <code>image_publisher</code>. O objetivo é criar um nó da ROS que:</p>
+<ol>
+<li>Se inscreva no tópico <code>/camera/image/compressed</code>.</li>
+<li>Utilizando métodos de visão computacional, modifique a função <code>color_segmentation</code> para encontrar o centro dos "creepers" vermelhos.</li>
+<li>Publicar uma imagem com um <em>crosshair</em> no centro do “creeper” para o tópico <code>image_publisher</code></li>
+<li>Publicar os valores de <code>x</code> e <code>y</code> do centro do “creeper” em um tópico <code>center_publisher</code> do tipo from <code>geometry_msgs/Point</code></li>
+<li>No caso de não haver um "creeper" vermelho no frame, deve publicar <code>x=-1</code> e <code>y=-1</code>.</li>
+<li>Na função <code>control</code> utilize o comando <code>rospy.loginfo</code> para mostrar no terminal as coordenadas do centro do “creeper”, ou alertar que não existem “creepers” na imagem.</li>
+</ol>
+<p><strong>DICA</strong> - Utilize o <code>rqt_image_view</code> para capturar uma imagem do “creepers” e descubra os limiares do filtro HSV para esta imagem.</p>
+<p><strong>SUGESTÃO</strong> - Durante o curso vamos utilizar também os “creepers” de outras cores, presentes neste cenário, pode ser vantajoso preparar a segmentação para eles também.</p>
+<p>Deixamos no arquivo a função que recebe os dados da imagem, faltando apenas o tipo da imagem.</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span>
+<span class="normal">12</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">laser_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">LaserScan</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Callback function for the image topic</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">cv_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span><span class="o">.</span><span class="n">compressed_imgmsg_to_cv2</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;bgr8&quot;</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">CvBridgeError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">color_segmentation</span><span class="p">(</span><span class="n">cv_image</span><span class="p">)</span>
+
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bridge</span><span class="o">.</span><span class="n">cv2_to_compressed_imgmsg</span><span class="p">(</span><span class="n">cv_image</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+<p>Primeiramente na função <code>__init__</code> definimos a variável <code>self.bridge</code>. Os tópicos da ROS trabalham com imagens codificadas, então na linha <code>6</code>, utilizamos essa variável para converter a imagem para a estrutura do OpenCV. Por fim, depois da imagem ser processada, na linha <code>12</code>, ela é codificada novamente e publicada em outro tópico.</p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../atividade3/"
+               class="ah-prev"
+               title="Visualização da ROS">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Visualização da ROS</span>
+            </a>
+          
+          
+            <a href="../../../../revisao-PI/"
+               class="ah-next"
+               title="Revisão PI">
+              <span class="nav-label">Próximo</span>
+              <span class="nav-title">Revisão PI</span>
+            </a>
+          
+        </div>
+      </footer>
+    </div>
+    
+      
+    
+  </body>
+</html>
