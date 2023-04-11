@@ -530,11 +530,13 @@
           
             <section class="progress-section show">
 <h1 id="explorando-topicos-e-mensagens">Explorando tópicos e mensagens</h1>
-<p>Primeiramente vamos inciar com algumas definições:
-* Nodes (Nós): Um nó na ROS é um processo que executa algum tipo de processo. No caso da disciplina, um nó seria um script do python que vamos chamar diretamente.
-* Topics (Tópicos): Os tópicos na ROS são barramentos onde a informação é trocada entre nós. Através de tópicos, nós podemos publicar e se inscrever para enviar e receber mensagens.
+<p>Primeiramente vamos inciar com algumas definições:</p>
+<ul>
+<li>Nodes (Nós): Um nó na ROS é um processo que executa algum tipo de processo. No caso da disciplina, um nó seria um script do python que vamos chamar diretamente.</li>
+<li>Topics (Tópicos): Os tópicos na ROS são barramentos onde a informação é trocada entre nós. Através de tópicos, nós podemos publicar e se inscrever para enviar e receber mensagens.
 Quando um nó publica uma mensagem ela é enviada para todos os nós que estão inscritos nesta mensagem.
-Tópicos são identificados por strings únicas.</p>
+Tópicos são identificados por strings únicas.</li>
+</ul>
 <p>Se o simulador da última atividade foi fechado, abra novamente, executando cada comando a seguir em seu terminal.</p>
 <div class="highlight"><pre><span></span><code>roslaunch<span class="w"> </span>my_simulation<span class="w"> </span>pista_s2.launch
 rqt_image_view

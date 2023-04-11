@@ -551,11 +551,13 @@ float32<span class="o">[]</span><span class="w"> </span>intensities
 <p>Vamos executar o <code>RViz</code>, que é uma ferramenta importante de monitoramento de dados de sensores e estado interno do robô, em um novo terminal, execute:</p>
 <div class="highlight"><pre><span></span><code>rosrun<span class="w"> </span>rviz<span class="w"> </span>rviz
 </code></pre></div>
-<p>Quando o programa abrir, faça as seguites modificações:
-* Mude a celula <code>Fixed Frame</code> para <code>base_scan</code>
-* Ao clica no botão <code>Add</code> adicione <code>LaserScan</code>
-* No LaserScan mude a celula <code>topic</code> para <code>/scan</code>
-* E mude a celula <code>Size</code> para <code>0.1</code></p>
+<p>Quando o programa abrir, faça as seguites modificações:</p>
+<ul>
+<li>Mude a celula <code>Fixed Frame</code> para <code>base_scan</code></li>
+<li>Ao clica no botão <code>Add</code> adicione <code>LaserScan</code></li>
+<li>No LaserScan mude a celula <code>topic</code> para <code>/scan</code></li>
+<li>E mude a celula <code>Size</code> para <code>0.1</code></li>
+</ul>
 <p><img alt="Rviz" src="../img/rviz.png" /></p>
 <p>Agora é possível entender melhor as leituras do sensor, faça o teste colocando a mão na frente do lidar, se estiver no robô real, ou movendo algum obstáculo para perto do robô, se estiver na simulação.</p>
 <h2 id="visualizando-o-topico-da-imagem">Visualizando o topico da imagem.</h2>
