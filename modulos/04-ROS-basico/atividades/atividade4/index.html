@@ -565,7 +565,7 @@ chmod<span class="w"> </span>+x<span class="w"> </span>*.py
 </code></pre></div></p>
 <details class="details">
 <summary>Resposta</summary>
-<p><a class="ah-button" href="modulo4/scripts_resp/publisher.py">Resposta</a></p>
+<p><a class="ah-button" href="../../modulo4/scripts_resp/publisher.py">Resposta</a></p>
 </details>
 <h1 id="q2-subscriber">Q2 - Subscriber</h1>
 <p>Agora vamos trabalhar em um nó que se inscreve no tópico que criamos no exercício anterior. A função <code>callback</code>, deve separar o tempo do contador no conteúdo da mensagem,lembre-se de checar a estrutura da mensagem. A função <code>control</code> deve calcular o tempo que passou e utilizar o comando <code>rospy.loginfo</code> para mostrar o número da mensagem e o delay dela no terminal, como no exemplo a seguir,</p>
@@ -591,12 +591,12 @@ chmod<span class="w"> </span>+x<span class="w"> </span>*.py
 </div>
 <details class="details">
 <summary>Resposta</summary>
-<p><a class="ah-button" href="modulo4/scripts_resp/subscriber.py">Resposta</a></p>
+<p><a class="ah-button" href="../../modulo4/scripts_resp/subscriber.py">Resposta</a></p>
 </details>
-<h1 id="q3-robo-quadrado-deadlock">Q3 - Robô quadrado (Deadlock)</h1>
+<h1 id="q3-robo-quadrado-dead-reckoning">Q3 - Robô quadrado (Dead reckoning)</h1>
 <p>Usando o simulador, modifique o arquivo <code>quadrado.py</code> para criar um nó da ROS que faça o robô se mova em uma trajetória que se <strong><em>aproxima</em></strong> de um quadrado.</p>
 <p><strong>DICA 1</strong> - Para fazer o robô se mover, publique uma mensagem para o tópico <code>cmd_vel</code>, verifique o tipo de mensagem que este tópico recebe utilizando o comando <code>rostopic type cmd_vel</code>.</p>
-<p><strong>DICA 2</strong> - Você pode esperar <code>n</code> segundos usando <code>rospy.sleep(n)</code>. Dessa forma, assumindo que o robô está se deslocando/rotacionando com velocidade constante, é possível prever sua posição final. Este tipo de controle se chama "Deadlock". É uma forma simples de se controlar o robô, mas tem a desvantagem de "travar" o código, deixando o roubo menos reativo.</p>
+<p><strong>DICA 2</strong> - Você pode esperar <code>n</code> segundos usando <code>rospy.sleep(n)</code>. Dessa forma, assumindo que o robô está se deslocando/rotacionando com velocidade constante, é possível prever sua posição final. Este tipo de controle se chama "dead reckoning". É uma forma simples de se controlar o robô, mas tem a desvantagem de "travar" o código, deixando o roubo menos reativo.</p>
 <h1 id="q4-robo-quase-indeciso">Q4 Robô Quase Indeciso</h1>
 <p>Usando o simulador e o Laser simulado, modifique o arquivo <code>indeciso.py</code>, faça com que o robô se afaste da parede quando o obstáculo à sua frente estiver a menos de <code>0.95m</code> e se aproximar quando estiver a mais de <code>1.05m</code>, caso contrário, o robô deve ficar parado. Portanto o robô deve parar eventualmente.</p>
 <p><strong>DICA</strong> - Recorte a mensagem do laser para observar um limiar de &plusmn;5&deg; e avalie com base no <strong>menor valor desse limiar</strong>.</p>
