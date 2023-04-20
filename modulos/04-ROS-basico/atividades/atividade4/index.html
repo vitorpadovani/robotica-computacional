@@ -597,7 +597,7 @@ chmod<span class="w"> </span>+x<span class="w"> </span>*.py
 <p>Usando o simulador, modifique o arquivo <code>quadrado.py</code> para criar um nó da ROS que faça o robô se mova em uma trajetória que se <strong><em>aproxima</em></strong> de um quadrado.</p>
 <p><strong>DICA 1</strong> - Para fazer o robô se mover, publique uma mensagem para o tópico <code>cmd_vel</code>, verifique o tipo de mensagem que este tópico recebe utilizando o comando <code>rostopic type cmd_vel</code>.</p>
 <p><strong>DICA 2</strong> - Você pode esperar <code>n</code> segundos usando <code>rospy.sleep(n)</code>. Dessa forma, assumindo que o robô está se deslocando/rotacionando com velocidade constante, é possível prever sua posição final. Este tipo de controle se chama "dead reckoning". É uma forma simples de se controlar o robô, mas tem a desvantagem de "travar" o código, deixando o roubo menos reativo.</p>
-<h1 id="q4-robo-quase-indeciso">Q4 Robô Quase Indeciso</h1>
+<h1 id="q4-robo-quase-indeciso">Q4 - Robô Quase Indeciso</h1>
 <p>Usando o simulador e o Laser simulado, modifique o arquivo <code>indeciso.py</code>, faça com que o robô se afaste da parede quando o obstáculo à sua frente estiver a menos de <code>0.95m</code> e se aproximar quando estiver a mais de <code>1.05m</code>, caso contrário, o robô deve ficar parado. Portanto o robô deve parar eventualmente.</p>
 <p><strong>DICA</strong> - Recorte a mensagem do laser para observar um limiar de &plusmn;5&deg; e avalie com base no <strong>menor valor desse limiar</strong>.</p>
 <p>Deixamos no arquivo a função que recebe os dados do Laser.
@@ -607,13 +607,13 @@ chmod<span class="w"> </span>+x<span class="w"> </span>*.py
 </code></pre></div>
 Esta função será chamada sempre que uma mensagem for publicada no tópico <code>/scan</code>. O conteúdo da mensagem será convertido para np.array e o valor é arredondado para 2 casas decimais. </p>
 <p>Como no robô simulado um objeto muito longe tem o valor <code>np.inf</code> e no robô real tem o valor <code>0</code>. a segunda linha do <code>laser_callback</code> serve para fazer a padronização dos valores.</p>
-<h1 id="q5-image-subscriber">Q5 Image Subscriber</h1>
+<h1 id="q5-image-subscriber">Q5 - Image Subscriber</h1>
 <p>Em projetos mais complexos da ROS, separar o código em módulos é uma boa prática para manter o projeto organizado e bem estruturado. Um módulo muito utilizado seria o módulo da visão, onde todos os processamentos de imagem são executados por um nó, que publica apenas as informações relevantes da imagem, como por exemplo, coordenadas do alvo.
 Neste exercício vamos trabalhar no arquivo <code>image_publisher</code>. O objetivo é criar um nó da ROS que:</p>
 <ol>
 <li>Se inscreva no tópico <code>/camera/image/compressed</code>.</li>
 <li>Utilizando métodos de visão computacional, modifique a função <code>color_segmentation</code> para encontrar o centro do "creeper" azul.</li>
-<li>Publique uma imagem com um <em>crosshair</em> no centro do “creeper” para o tópico <code>image_publisher</code></li>
+<li>Publique uma imagem com um <em>crosshair</em> no centro do “creeper” para o tópico <code>image_publisher</code> do tipo <code>sensor_msgs/Image</code></li>
 <li>Publique os valores de <code>x</code> e <code>y</code> do centro do “creeper” em um tópico <code>center_publisher</code> do tipo <code>geometry_msgs/Point</code></li>
 <li>No caso de não haver um "creeper" azul no frame, deve publicar <code>x=-1</code> e <code>y=-1</code>.</li>
 <li>Na função <code>control</code> utilize o comando <code>rospy.loginfo</code> para mostrar no terminal as coordenadas do centro do “creeper”, ou alertar que não existem “creepers” na imagem.</li>
@@ -643,7 +643,7 @@ Neste exercício vamos trabalhar no arquivo <code>image_publisher</code>. O obje
 
     <span class="bp">self</span><span class="o">.</span><span class="n">color_segmentation</span><span class="p">(</span><span class="n">cv_image</span><span class="p">)</span> <span class="c1"># Processamento da imagem</span>
 
-    <span class="bp">self</span><span class="o">.</span><span class="n">image_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bridge</span><span class="o">.</span><span class="n">cv2_to_compressed_imgmsg</span><span class="p">(</span><span class="n">cv_image</span><span class="p">))</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">image_pub</span><span class="o">.</span><span class="n">publish</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">bridge</span><span class="o">.</span><span class="n">cv2_to_imgmsg</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="s2">&quot;bgr8&quot;</span><span class="p">))</span>
 </code></pre></div></td></tr></table></div>
 <p>Primeiramente na função <code>__init__</code> definimos a variável <code>self.bridge</code>. Os tópicos da ROS trabalham com imagens codificadas, então na linha <code>6</code>, utilizamos essa variável para converter a imagem para a estrutura do OpenCV. Por fim, depois da imagem ser processada, na linha <code>12</code>, ela é codificada novamente e publicada em outro tópico.</p>
 
