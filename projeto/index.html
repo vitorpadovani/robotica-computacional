@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
       
-        <title>Missão no Lab Ágil - Robótica Computacional - Insper</title>
+        <title>Missão na 404 - Robótica Computacional - Insper</title>
       
     
     <link rel="stylesheet"
@@ -481,26 +481,6 @@
   </li>
 
             
-              
-  <li class="ah-togglable-item opened">
-    <span class="ah-togglable-handle">Projetos</span>
-    <ul>
-      
-        
-  
-    <li class="active ah-togglable-item opened">
-      <span class="ah-togglable-handle">Missão no Lab Ágil</span>
-      <ul>
-        
-      </ul>
-    </li>
-  
-
-      
-    </ul>
-  </li>
-
-            
           </ul>
         </div>
       </nav>
@@ -510,34 +490,141 @@
             <ul class="ah-breadcrumbs">
               
                 
-                  
-                    <li>Projetos</li>
-                  
-                
-                <li>Missão no Lab Ágil</li>
+                <li>Missão na 404</li>
             </ul>
             
             
           </div>
-          
-            <section class="progress-section show">
-<h1 id="missao-no-lab-agil">Missão no Lab Ágil</h1>
-<p>TODO</p>
+          <section class="progress-section show">
+<h1 id="missao-na-404">Missão na 404</h1>
+<p>No projeto da disciplina iremos programar o nosso TurtleBot para realizar missões robóticas na sala 404. O cenário que usaremos é o abaixo.</p>
+<p><img alt="TODO: foto do simulador" src="pista.jpeg" /></p>
+<p>O projeto deverá ser feito em grupos de 3 pessoas usando o repositório do GH Classroom abaixo. </p>
+<p><a class="ah-button" href="TODO: link aqui">Link para tarefa do GH Classroom</a></p>
+<h2 id="comecando-o-projeto">Começando o projeto</h2>
+<p>O repositório do Github Classroom estará vazio. Para iniciar o projeto um dos membros do grupo deverá seguir o <a href="criar-projeto.md">guia de início de projetos ROS</a>. </p>
+<p>Quando isso for finalizado, o restante do grupo deverá clonar o projeto ROS na pasta <code>~/catkin_ws/src</code> usando o seguinte comando:</p>
+<div class="highlight"><pre><span></span><code>git<span class="w"> </span>clone<span class="w"> </span>SEU_REPO_AQUI<span class="w"> </span>~/catkin_ws/src/projeto-robcomp
+</code></pre></div>
+<p>Cada missão deverá ser colocada em um arquivo <code>.py</code> separado com o nome da missão que ele realiza. </p>
+<h2 id="missoes">Missões</h2>
+<p>O projeto consistirá em diversas missões diferentes no cenário acima. As missões tem complexidade crescente e requisitos tanto de projeto de software quanto de uso dos sensores e comportamentos do robô. É necessário realizar todas as missões anteriores para conseguir a nota de uma missão mais avançada. As missões envolvem os seguintes elementos:</p>
+<ul>
+<li><strong>Creepers</strong>: bonequinhos que parecem os do minecraft e que devem ser levados até</li>
+<li><strong>Drop areas</strong>: caixas com imagens detectáveis pela mobilenet. Creepers devem ser depositados perto dessas caixas</li>
+<li><strong>Slalom</strong>: sequência de 3 caixas coloridas em forma de zigue zague. </li>
+</ul>
+<p>Para completar uma missão você deve:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> capturar a tela do robô realizando a missão no simulador </li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> filmar o robô realizando a missão na pista da sala<ul>
+<li>para filmar é preciso pedir a preparação da pista para a equipe de técnicos. Isso garante que todos terão condições parecidas nas missões.</li>
+</ul>
+</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> cada missão demora menos de 15 minutos para ser completada</li>
+</ul>
+<p>Missões podem ser completadas durante o andamento do projeto. É só pedir a validação da parte dos requisitos de software antes de gravar. </p>
+<h3 id="missao-d">Missão <strong>D</strong></h3>
+<p>Essa missão é a mais simples do projeto e envolve aplicar diretamente os conceitos trabalhados na APS04. Os seguintes passos devem ser realizados:</p>
+<ol>
+<li>O robô sai da posição inicial e vira à direita na trifurcação. </li>
+<li>Ele segue pela área da direita até juntar novamente os caminhos</li>
+<li>Vai em direção aos creepers e derruba o creeper <strong>verde</strong></li>
+<li>Retorna para a posição inicial usando a pista do meio</li>
+</ol>
+<p><strong>Essa missão não tem requisitos de projeto de software</strong></p>
+<p><strong>Nota final desta missão:</strong> 3,0</p>
+<h3 id="missao-c">Missão <strong>C</strong></h3>
+<p>A missão <strong>C</strong> envolve agora usar a garra para pegar o creeper (e possivelmente o LiDAR para medir a distância até ele). </p>
+<ol>
+<li>O robô sai da posição inicial, vira à direita na encruzilhada e vai até a áera dos creepers</li>
+<li>Ele pega o creeper <strong>verde</strong> e deposita perto da drop area da pista do centro. </li>
+<li>Volta para posição inicial</li>
+</ol>
+<p><strong>Requisitos de projeto de software</strong>:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> o código deve usar classes</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> o código deve usar máquina de estados</li>
+</ul>
+<p><strong>Nota final desta missão:</strong> 5,0</p>
+<h3 id="missao-c_1">Missão <strong>C+</strong></h3>
+<p>A missão <strong>C+</strong> adiciona um novo desafio de controle: fazer o <strong>Slalom</strong></p>
+<ol>
+<li>O robô sai da posição inicial, vira à esquerda na encruzilhada</li>
+<li>Faz o <strong>Slalom</strong> e prossegue até a área dos creepers</li>
+<li>Pega o creeper <strong>verde</strong> e deposita na drop area da pista do centro</li>
+<li>Volta para posição inicial</li>
+</ol>
+<p><strong>Requisitos de projeto de software</strong>:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> código deve usar classes</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> código deve usar máquina de estados</li>
+</ul>
+<p><strong>Nota final desta missão:</strong> 6,5</p>
+<h3 id="missao-b">Missão <strong>B</strong></h3>
+<p>Agora vamos integrar tudo, com objetivos que dependem da <em>MobileNet</em></p>
+<ol>
+<li>O programa recebe dois argumentos na linha de comando: cor do creeper e drop area</li>
+<li>Vai até a áera do creepers usando qualquer caminho que quiser e pega o creeper</li>
+<li>Encontra a drop area passada como argumento. <strong>Neste item ela sempre estará no centro ou na direita.</strong></li>
+<li>Deposita o creeper na drop area</li>
+<li>Retorna ao ponto inicial</li>
+</ol>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Para demonstrar o funcionamento do seu robô será necessário fazer vários testes:</p>
+<ul>
+<li>pegar creeper de cada cor uma vez</li>
+<li>depositar creeper em cada uma das 2 drop areas</li>
+</ul>
+<p>Planeje bem o desenvolvimento do seu projeto para que isso seja feito na menor quantidade possível de filmagens</p>
+</div>
+<p><strong>Requisitos de projeto de software</strong>:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> código deve usar classes</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> código deve usar máquina de estados</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> código não leva em conta conhecimento sobre a posição das drop areas, mas sim a detecção da imagem das caixas</li>
+</ul>
+<p><strong>Nota final desta missão:</strong> 8,0</p>
+<h3 id="missao-b_1">Missão <strong>B+</strong></h3>
+<p>Esse item é exatamente igual ao anterior, mas deve-se demonstrar a missão acima com caixas em posições diferentes das que estão no cenário simulado. Ou seja, faça dois vídeos em que</p>
+<ol>
+<li>todas as drop areas estão em locais diferentes (e longe dos locais originais)</li>
+<li>trocou as drop areas de lado (a do centro foi para a direita e a da direita para o centro) </li>
+</ol>
+<p><strong>Requisitos de projeto de software</strong>:</p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> código deve usar classes</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> código deve usar máquina de estados</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> código não leva em conta conhecimento sobre a posição das drop areas, mas sim a detecção da imagem das caixas</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> parte de visão do código está feita em um nó separado do ROS, que publica um ou mais tópicos com as informações detectadas</li>
+</ul>
+<p><strong>Nota final desta missão:</strong> 9,0</p>
+<h3 id="missao-a">Missão <strong>A+</strong></h3>
+<p>A missão final é a mesma da <strong>Missão B</strong>, mas com um adendo: qualquer uma das 4 drop areas pode ser passada na linha de comando e elas podem estar em qualquer lugar da pista. Isso significa que iremos juntar tudo o que foi feito em um único programa:</p>
+<ol>
+<li><strong>Garra</strong> e <strong>LiDAR</strong> para pegar os creepers</li>
+<li><strong>mobile net</strong> para detectar as drop areas corretas</li>
+<li><strong>aruco</strong> para encontrar encruzilhadas e creepers</li>
+<li><strong>controle</strong> para andar na pista sem sair</li>
+<li><strong>planejamento e máquina de estados</strong> para criar comportamento complexo a partir de estados "simples"</li>
+</ol>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Aqui será necessário criar várias filmagens para validar. Isso dá um certo trabalho fazer no robô real, então algumas delas podem ser feitas no simulador. Faça várias combinações possíveis de</p>
+<ul>
+<li>cores do creeper a ser pego</li>
+<li>drop area para depositar (colocar no lado do slalom e no outro lado)</li>
+</ul>
+</div>
+<p><strong>Nota final desta missão:</strong> 10,0</p>
 
 
 </section>
-          
         
       </main>
       <footer class="ah-footer ah-typeset">
         <div class="ah-footer-nav">
-          
-            <a href="../revisao-PI/"
-               class="ah-prev"
-               title="Revisão PI">
-              <span class="nav-label">Anterior</span>
-              <span class="nav-title">Revisão PI</span>
-            </a>
           
           
         </div>
