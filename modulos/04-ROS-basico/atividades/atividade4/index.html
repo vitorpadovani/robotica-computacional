@@ -484,6 +484,23 @@
   </li>
 
             
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Projetos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../../projeto/">Missão no Lab Ágil</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
           </ul>
         </div>
       </nav>
@@ -510,7 +527,8 @@
             
             
           </div>
-          <section class="progress-section show">
+          
+            <section class="progress-section show">
 <h1 id="exercicios-ros">Exercícios ROS</h1>
 <p>No arquivo <code>base.py</code> fornecemos uma estrutura básica de um script da ROS usando classe no python.</p>
 <p>A função <code>main.py</code> cria um nó com o nome <code>'Controler'</code> e construir um a classe <code>Control()</code>, depois até que o <code>core</code> da ROS seja interrompido vai executar o conteúdo da função <code>Control().control</code> em loop.</p>
@@ -556,8 +574,8 @@ chmod<span class="w"> </span>+x<span class="w"> </span>*.py
 <p><strong>DICA 1</strong> - Pode carregar um valor float referente a um tempo da seguinte forma:
 <div class="highlight"><pre><span></span><code><span class="n">time</span> <span class="o">=</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="p">(</span> <span class="nb">float</span><span class="p">(</span> <span class="n">rospy</span><span class="o">.</span><span class="n">Time</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">to_sec</span><span class="p">()</span> <span class="p">)</span> <span class="p">)</span>
 </code></pre></div></p>
-<div class="admonition exercise long tag-text-exercise tag-long-text" data-slug="modulos/04-ROS-basico/atividades/atividade4/long_1" id="long_1_0">
-<p class="admonition-title">Exercício 1</p>
+<div class="admonition exercise long tag-long-text tag-text-exercise editable" data-slug="modulos/04-ROS-basico/atividades/atividade4/long_1" id="long_1_0">
+<p class="admonition-title">Exercício 1<button class="editable-button"></button></p>
 <form class="exercise-form">
 <p>Qual a estrutura da mensagem do tipo <code>String</code>?</p>
 <div class="form-elements">
@@ -631,6 +649,7 @@ Neste exercício vamos trabalhar no arquivo <code>image_publisher</code>. O obje
 
 
 </section>
+          
         
       </main>
       <footer class="ah-footer ah-typeset">
