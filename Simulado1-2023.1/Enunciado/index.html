@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Enunciado - Robótica Computacional - Insper</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../equipe.css"><link rel="stylesheet" href="../../css/ansi-colours.css"><link rel="stylesheet" href="../../css/jupyter-cells.css"><link rel="stylesheet" href="../../css/pandas-dataframe.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../.."
+           title="Robótica Computacional - Insper"
+           class="ah-logo"
+           aria-label="Robótica Computacional - Insper">
+          Robótica Computacional - Insper
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../..">Robótica Computacional 2023/1</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Infra</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/">Comece aqui</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Linux</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/ssd-linux/">Início</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Primeiro boot com SSD</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/ssd-linux/recebi-meu-ssd/">Início</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/ssd-linux/recebi-meu-ssd/windows/">Windows</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/ssd-linux/recebi-meu-ssd/mac-os/">macOS (intel)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/ssd-linux/primeiros-passos/">Meu SSD subiu, e agora?</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/ssd-linux/guia-linux/">Guia básico de Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/ssd-linux/git-e-github/">Configure o seu Git</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Robô Simulado</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/robo-simulado/">Primeiros passos com o Robô Simulado</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Robô TurtleBot3</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/turtlebot3/">Conectando no robô físico</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/aps/">Configuração da APS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../guias-infra/checagem/">Conferência da Infra</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Módulos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../modulos/">Módulos do curso</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">00 - Introdução</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../modulos/00-intro/">Sobre o curso</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/00-intro/atividade-dia1/">Atividades dia 1</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/00-intro/recursos-legais/">Para saber mais</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">01 - Imagens e Matrizes</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../modulos/01-imagens-e-matrizes/">01 - Imagens e Matrizes</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Atividades</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../modulos/01-imagens-e-matrizes/atividade1/">Leitura de imagens</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/01-imagens-e-matrizes/atividade2/">Percorrendo a imagem</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/01-imagens-e-matrizes/atividade3/">Cookbook de Numpy</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/01-imagens-e-matrizes/atividade4/">Segmentação de imagens por cor</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">02 - Modelo de Câmera</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../modulos/02-modelo-de-camera/">02 - Modelos de câmera</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Atividades</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../modulos/02-modelo-de-camera/atividade1/">Segmentação usando HSV e contornos</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/02-modelo-de-camera/atividade2/">Morfologia matemática</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/02-modelo-de-camera/atividade3/">Demonstração de segmentação</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/03-visao/">03 - Visão</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">04 - ROS Básico</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../modulos/04-ROS-basico/">04 - ROS básico</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Atividades</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../modulos/04-ROS-basico/atividades/atividade1/">Simulador do Turtlebot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/04-ROS-basico/atividades/atividade2/">Tópicos e mensagens na ROS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/04-ROS-basico/atividades/atividade3/">Visualização da ROS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../modulos/04-ROS-basico/atividades/atividade4/">Lista de exercícios da ROS</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Revisões</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../revisao-PI/">Revisão PI</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                <li>Enunciado</li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var requireJsScript = document.createElement('script');
+    requireJsScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js';
+
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var jupyterWidgetsScript = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
+
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    jupyterWidgetsScript.src = widgetRendererSrc;
+
+    document.body.appendChild(requireJsScript);
+    document.body.appendChild(jupyterWidgetsScript);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="robotica-computacional-20231">Robótica Computacional 2023.1</h1>
+<h2 id="1a-simulado">1ª Simulado</h2>
+<p><strong>Este simulado contém 3 questões de OpenCv.</strong></p>
+<p>Nome:_______________</p>
+<p>Questões que fez:____________</p>
+<p>Observações de avaliações nesta disciplina:</p>
+<ul>
+<li>Inicie a prova no Blackboard para a ferramenta de Proctoring iniciar. Só finalize o Blackboard quando enviar a prova via Github classroom</li>
+<li>Durante esta prova vamos registrar somente a tela, não a câmera nem microfone</li>
+<li>Ponha o nome no enunciado da prova no Github</li>
+<li>Tenha os repositórios atualizados em seu catkin_ws/src .</li>
+<li>Você pode consultar a internet ou qualquer material, mas não pode se comunicar com pessoas ou colegas a respeito da prova. Também não pode usar ferramentas de <strong>IA</strong> como chatGPT ou Github Copilot durante a prova.</li>
+<li>Faça commits e pushes frequentes no seu repositório</li>
+<li>Avisos importantes serão dados na sala da prova</li>
+<li>Permite-se consultar qualquer material online ou próprio. Não se pode compartilhar informações com colegas durante a prova</li>
+<li>Faça commits frequentes. O primeiro a enviar alguma ideia será considerado autor original</li>
+<li>A responsabilidade por ter o <em>setup</em> funcionando é de cada estudante</li>
+<li>Questões de esclarecimento geral podem ser perguntadas</li>
+<li>É vedado colaborar ou pedir ajuda a colegas ou qualquer pessoa que conheça os assuntos avaliados nesta prova.</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="questao-1">Questão 1</h2>
+<p>Você precisa desenvolver um programa que identifica num vídeo onde estão as bandeiras do Japão e da Polônia. </p>
+<p>Regras:
+* Seu programa precisa desenhar numa imagem um retângulo de borda sobre onde estiverem os dois países de interesse
+* Seu programa precisa devolver as coordenadas dos cantos que contém a bandeira do Japão e a da Polônia, seguindo o modelo que está no <code>q1.py</code></p>
+<p>As imagens de entrada são deste tipo:</p>
+<p><img src="./img/Q1.jpg"></img></p>
+<p>Os países a identificar serão: </p>
+<p><img src="./img/Q1_saida.jpg"></img></p>
+<p>A ordem em que os cantos (corners) da <em>bounding box</em> de cada país devem ser retornados é esta. Sempre Japão primeiro e depois Polônia. Basta seguir a sequência indicada no código em <code>q1.py</code>. </p>
+<p><img src="./img/Q1_corners.jpg"></img></p>
+<p>Você vai trabalhar no vídeo <code>bandeiras_paises.mp4</code> que já está no diretório. </p>
+<h4 id="orientacoes">Orientações</h4>
+<p>Trabalhe no arquivo <code>q1/q1.py</code>. Este exercício <strong>não precisa</strong> de ROS. Portanto pode ser feito até em Mac ou Windows</p>
+<table>
+<thead>
+<tr>
+<th>Resultado</th>
+<th>Conceito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Não executa</td>
+<td>zero</td>
+</tr>
+<tr>
+<td>Segmenta ou filtra a imagem baseado em cores ou canais da imagem e produz output visual</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Encontra contornos, com output visual</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>Identifica um dos países corretamente com output visual e corners corretos</td>
+<td>2.2</td>
+</tr>
+<tr>
+<td>Identifica o outro corretamente com output visual claro e corners corretos</td>
+<td>2.9</td>
+</tr>
+<tr>
+<td>Resultados perfeitos</td>
+<td>3.33</td>
+</tr>
+</tbody>
+</table>
+<p>Casos intermediários ou omissos da rubrica serão decididos pelo professor.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="questao-2">Questão 2</h2>
+<p>Você deve fazer um programa que, a cada momento, indica se a estrela azul está dentro ou fora do seu triângulo designado.</p>
+<p><img alt="" src="../q2/triangulos.gif" /></p>
+<h4 id="o-que-voce-deve-fazer">O que você deve fazer:</h4>
+<p>Se o penúltimo dígito de seu RA for ímpar, você deve considerar o triângulo vermelho</p>
+<p>Se o penúltimo dígito seu RA for par, você deve considerar o triângulo verde'</p>
+<h4 id="orientacoes_1">Orientações</h4>
+<p>A função <code>triutil.point_in_triangle()</code> é fornecida pronta e verifica se um ponto está contido num triângulo ou não. Analise e execute o programa <code>tritest.py</code> para saber como ela funciona</p>
+<p>Você vai notar que este programa roda o vídeo <code>triangulos.mp4</code>, que já está na pasta da prova.</p>
+<p>Trabalhe no arquivo <code>q2/q2.py</code>. Este exercício <strong>não precisa</strong> de ROS</p>
+<h4 id="o-que-voce-deve-fazer_1">O que você deve fazer:</h4>
+<p>Mostrar na tela a string "Dentro" sempre que a estrela estiver dentro de seu triângulo designado.</p>
+<p>Mostrar na tela a string "Fora" se a estrela estiver fora. </p>
+<p>Caso a estrela esteja na borda do triângulo, e parte esteja fora e outra parte esteja dentro,  você pode dar qualquer um dos dois resultados. </p>
+<p>Note que você vai precisar <strong>descobrir</strong> quais são os vértices do triângulo para poder chamar a função <code>triutil.point_in_triangle()</code>.  </p>
+<p>Você também vai precisar selecionar um ou mais pontos para resumirem a estrela. Por exemplo, o centro de massa ou o centro do contorno. Pode ainda usar todos os pontos que pertencem à estrela e tentar achar um consenso. Enfim, fica a seu critério.</p>
+<table>
+<thead>
+<tr>
+<th>Resultado</th>
+<th>Conceito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Não executa</td>
+<td>0</td>
+</tr>
+<tr>
+<td>Segmenta e limiariza seu triângulo</td>
+<td>0.75</td>
+</tr>
+<tr>
+<td>Encontra vértices do triângulo</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>Consegue segmentar a estrela e calcular que pontos testar</td>
+<td>2.3</td>
+</tr>
+<tr>
+<td>Imprime sempre corretamente</td>
+<td>3.33</td>
+</tr>
+</tbody>
+</table>
+<p>Casos intermediários ou omissos da rubrica serão decididos pelo professor.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="questao-3">Questão 3</h2>
+<p>Você faz parte do projeto de uma plataforma digital para assistência a treinamento de cães, que tem o objetivo de fazer o pet se movimentar. Seu papel é fazer a parte da visão computacional que irá identificar se o cão está de fato fazendo o exercício pretendido e medir o seu aproveitamento.</p>
+<p>Para tanto, seu programa deverá identificar se o cachorro se aproximou ou se afastou da bola entre dois frames consecutivos. No caso do cão se afastar da bola, uma mensagem adicional deve aperecer na imagem E no terminal: <code>REX, CORRE!</code></p>
+<h4 id="orientacoes_2">Orientações</h4>
+<p>Trabalhe no arquivo <code>q3/q3.py</code>. Este exercício <strong>não precisa</strong> de ROS. Portanto pode ser feito até em Mac ou Windows</p>
+<p>Você vai notar que este programa roda o vídeo <code>dogtraining.mp4</code>, que já está na pasta da questão.</p>
+<h4 id="o-que-voce-deve-fazer_2">O que você deve fazer:</h4>
+<table>
+<thead>
+<tr>
+<th>Resultado</th>
+<th>Conceito</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Não executa</td>
+<td>zero</td>
+</tr>
+<tr>
+<td>Identifica o cachorro OU a bola, marcando claramente na imagem</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>Identifica o cachorro E a bola, marcando claramente na imagem</td>
+<td>1.5</td>
+</tr>
+<tr>
+<td>Identifica o cachorro e a bola e mede a distância entre os dois</td>
+<td>2.0</td>
+</tr>
+<tr>
+<td>Identifica que o cachorro se aproxima ou se afasta da boal</td>
+<td>2.5</td>
+</tr>
+</tbody>
+</table>
+<p>Casos intermediários ou omissos da rubrica serão decididos pelo professor.</p>
+<p><em>Exemplo do que deve ser feito</em></p>
+<p>Exemplo de imagem de entrada
+<img alt="" src="../q3/cao_exemplo.png" /></p>
+<p>Exemplo de imagem de saida
+<img alt="" src="../q3/cao_exemplo_detecta.png" /></p>
+</div>
+</div>
+</div>
+<!--0 REMOVE ME-->
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      
+    
+  </body>
+</html>
