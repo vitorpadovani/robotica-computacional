@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+      
+        <title>Marcadores ArUco - Robótica Computacional - Insper</title>
+      
+    
+    <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed:700|Oxygen+Mono|Source+Sans+Pro:700|Source+Serif+Pro&amp;display=swap">
+    <link rel="stylesheet" href="../../../assets/css/main.css">
+    <script>
+      // SETUP GLOBAL CONSTANTS
+      var base_url = '../../..';
+      
+      var telemetryEnabled = false;
+      var backendUrl = "";
+      var courseSlug = "";
+      
+      
+      var dashboardEnabled = false;
+      var tagTree = {};
+      
+
+      // SETUP PLUGIN
+      window.initialized = false;
+      if (!window.initializers) window.initializers = [];
+      window.registerInitializer = (initialize) => {
+        if (window.initialized) initialize();
+        else window.initializers.push(initialize);
+      };
+    </script>
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+          processEscapes: true
+        }
+      });
+    </script>
+    <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script src="https://unpkg.com/hyperscript.org"></script>
+    <script src="https://unpkg.com/htmx.org@1.8.4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+    <script src="../../../assets/js/main.js"></script>
+    
+    <link rel="stylesheet" href="../../../equipe.css"><link rel="stylesheet" href="../../../css/ansi-colours.css"><link rel="stylesheet" href="../../../css/jupyter-cells.css"><link rel="stylesheet" href="../../../css/pandas-dataframe.css">
+  </head>
+  <body>
+    <div class="ah-main-container">
+      <header class="ah-header">
+        <button class="ah-menu-btn ah-button ah-button--borderless"
+                aria-label="toggle menu">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/>
+</svg>
+        </button>
+        <a href="../../.."
+           title="Robótica Computacional - Insper"
+           class="ah-logo"
+           aria-label="Robótica Computacional - Insper">
+          Robótica Computacional - Insper
+        </a>
+        <div class="ah-header--right">
+          
+          
+          
+          <button id="resetHandoutButton">
+            <span class="icon"><svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+  <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z"/>
+</svg></span>
+          </button>
+          
+
+          
+        </div>
+      </header>
+      <nav class="ah-navigation preload">
+        <div class="ah-nav-container">
+          <button class="ah-menu-btn ah-button ah-button--borderless close-menu"
+                  aria-label="close menu">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512">
+  <!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
+  <path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/>
+</svg>
+          </button>
+          <ul class="ah-nav-body">
+            
+              
+  
+    <li>
+      <a href="../../..">Robótica Computacional 2023/1</a>
+    </li>
+  
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Infra</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/">Comece aqui</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Linux</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/ssd-linux/">Início</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Primeiro boot com SSD</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/ssd-linux/recebi-meu-ssd/">Início</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/ssd-linux/recebi-meu-ssd/windows/">Windows</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/ssd-linux/recebi-meu-ssd/mac-os/">macOS (intel)</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/ssd-linux/primeiros-passos/">Meu SSD subiu, e agora?</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/ssd-linux/guia-linux/">Guia básico de Linux</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/ssd-linux/git-e-github/">Configure o seu Git</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Robô Simulado</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/robo-simulado/">Primeiros passos com o Robô Simulado</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Robô TurtleBot3</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/turtlebot3/">Conectando no robô físico</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/aps/">Configuração da APS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../guias-infra/checagem/">Conferência da Infra</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Módulos</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../modulos/">Módulos do curso</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">00 - Introdução</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../modulos/00-intro/">Sobre o curso</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/00-intro/atividade-dia1/">Atividades dia 1</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/00-intro/recursos-legais/">Para saber mais</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">01 - Imagens e Matrizes</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../modulos/01-imagens-e-matrizes/">01 - Imagens e Matrizes</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Atividades</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../modulos/01-imagens-e-matrizes/atividade1/">Leitura de imagens</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/01-imagens-e-matrizes/atividade2/">Percorrendo a imagem</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/01-imagens-e-matrizes/atividade3/">Cookbook de Numpy</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/01-imagens-e-matrizes/atividade4/">Segmentação de imagens por cor</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">02 - Modelo de Câmera</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../modulos/02-modelo-de-camera/">02 - Modelos de câmera</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Atividades</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../modulos/02-modelo-de-camera/atividade1/">Segmentação usando HSV e contornos</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/02-modelo-de-camera/atividade2/">Morfologia matemática</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/02-modelo-de-camera/atividade3/">Demonstração de segmentação</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/03-visao/">03 - Visão</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">04 - ROS Básico</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../modulos/04-ROS-basico/">04 - ROS básico</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Atividades</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../modulos/04-ROS-basico/atividades/atividade1/">Simulador do Turtlebot</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/04-ROS-basico/atividades/atividade2/">Tópicos e mensagens na ROS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/04-ROS-basico/atividades/atividade3/">Visualização da ROS</a>
+    </li>
+  
+
+      
+        
+  
+    <li>
+      <a href="../../../modulos/04-ROS-basico/atividades/atividade4/">Lista de exercícios da ROS</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item">
+    <span class="ah-togglable-handle">Revisões</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../../revisao-PI/">Revisão PI</a>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+            
+              
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Projeto</span>
+    <ul>
+      
+        
+  
+    <li>
+      <a href="../../">Missão na 404</a>
+    </li>
+  
+
+      
+        
+  <li class="ah-togglable-item opened">
+    <span class="ah-togglable-handle">Exemplos</span>
+    <ul>
+      
+        
+  
+    <li class="active ah-togglable-item opened">
+      <span class="ah-togglable-handle">Marcadores ArUco</span>
+      <ul>
+        
+      </ul>
+    </li>
+  
+
+      
+    </ul>
+  </li>
+
+      
+    </ul>
+  </li>
+
+            
+          </ul>
+        </div>
+      </nav>
+      <main class="ah-content ah-typeset">
+        
+          <div class="ah-title-box">
+            <ul class="ah-breadcrumbs">
+              
+                
+                  
+                    <li>Projeto</li>
+                  
+                
+                  
+                    <li>Exemplos</li>
+                  
+                
+                <li>Marcadores ArUco</li>
+            </ul>
+            
+            
+          </div>
+          
+            <section class="progress-section show">
+<h1 id="marcadores-aruco">Marcadores ArUco</h1>
+<div class="admonition people">
+<p class="admonition-title">Autoras</p>
+<ul>
+<li><img alt="Licia" src="/equipe/licia.jpeg" /> <strong>Licia Lima</strong> </li>
+<li><img alt="Ana Laiz" src="/equipe/ana-laiz.jpg" /> <strong>Ana Laiz Farias</strong> </li>
+</ul>
+</div>
+<p>Estimar a posição relativa a um objeto é de grande importância em muitas aplicações de visão computacional, como navegação de robôs, realidade aumentada e muito mais. Este processo se baseia em encontrar correspondências entre pontos no ambiente e sua projeção de imagem 3D. Esta é geralmente uma etapa difícil e, portanto, é comum o uso de marcadores para facilitar.
+Uma das abordagens mais populares é o uso de marcadores binários. O principal benefício desses marcadores é que um único marcador fornece correspondências suficientes (seus quatro cantos) para obter a posição da câmera em relação ao marcador. Além disso, a codificação binária interna os torna especialmente robustos, permitindo a possibilidade de aplicar técnicas de detecção e correção de erros.</p>
+<p>A biblioteca ArUco é um modulo para detecção de marcadores de referência desenvolvida por Rafael Muñoz e Sergio Garrido, se quiser saber mais, recomendo a <a href="https://mecaruco2.readthedocs.io/en/latest/notebooks_rst/Aruco/aruco_basics.html">documentação</a> que foi usada como base para desenvolver esse guia.</p>
+<h2 id="antes-de-comecar">Antes de começar</h2>
+<p>Se estiver usando o simulador, certifique-se de que o seu arquivo <strong><em>robotica.sh</em></strong> está configurado corretamente para se conectar ao robô simulado (Se não sabe do que eu estou falando, <a href="https://insper.github.io/robotica-computacional/guias-infra/robo-simulado/">volte ao guia robo-simulado</a>).</p>
+<p>Se estiver usando o robô físico, configure corretamente o arquivo <strong><em>robotica.sh</em></strong> (veja o <a href="https://insper.github.io/robotica-computacional/guias-infra/turtlebot3/">guia robo-fisico</a> se tiver dúvidas sobre como se conectar ao robô fisico)</p>
+<h2 id="aruco-3d">Aruco 3D</h2>
+<p>Utilizando a técnica de marcadores aruco 3D podemos obter os corners que são as coordenadas dos “cantos” do aruco e os IDs dos arucos, também conseguimos calcular o vetor de transalação e o vetor de rotação do aruco em relação ao robô, com essas informações é possível extrair a distância euclidiana e a distância focal do aruco em relação ao robô, essas implementações estão disponíveis para você no código exemplo <a href="aruco_3d.py">aruco_3d.py</a>, para executar:</p>
+<p>Certifique-se de que o terminal está aberto na mesma página que está o código, usando o comando “ls” é possível listar o conteúdo do diretório, é preciso que os arquivos abaixo estejam na pasta.</p>
+<div class="highlight"><pre><span></span><code>$&gt;<span class="w"> </span>ls
+aruco_3d.py<span class="w"> </span>cameraDistortion_realsense.txt<span class="w"> </span>cameraMatrix_realsense.tx*
+</code></pre></div>
+<p><img alt="Untitled" src="imgs/Untitled1.png" /></p>
+<p>Execute o arquivo <code>aruco_3d.py</code> com a simulação da pista usada nas atividades rodando.</p>
+<div class="highlight"><pre><span></span><code>python3<span class="w"> </span>aruco_3d.py
+</code></pre></div>
+<p>Neste código, temos a estrutura padrão que será utilizada na matéria. No entanto, vamos explicar agora, linha por linha, como funciona a função geraAruco que está no arquivo aruco_3d.py. Em primeiro lugar, peço que olhe para a função <strong>image_callback</strong> e perceba que nela tratamos a imagem que chega através do <strong>Subscriber</strong>, responsável por cuidar do tópico que recebe as informações da câmera do robô.</p>
+<p>Para executar a função <em>geraAruco</em> iremos chamá-la no <em>image_calback</em>, pois é a função responsável por atualizar a imagem para todo frame recebido.</p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">image_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">msg</span><span class="p">:</span> <span class="n">CompressedImage</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+
+    <span class="c1">#converte a msg do ROS para OpenCV </span>
+    <span class="n">cv_image</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">bridge</span><span class="o">.</span><span class="n">compressed_imgmsg_to_cv2</span><span class="p">(</span><span class="n">msg</span><span class="p">,</span> <span class="s2">&quot;bgr8&quot;</span><span class="p">)</span>
+    <span class="c1">#chama a função de leitura dos Arucos</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">ids</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">centros_aruco</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">distancias</span> <span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">geraAruco</span><span class="p">(</span><span class="n">cv_image</span><span class="p">)</span>
+</code></pre></div>
+<p>Agora, vamos entender a função <strong>geraAruco</strong>. Cada ponto a seguir apresenta uma linha de código:</p>
+<ul>
+<li>
+<p><strong>Centros:*</strong> Criamos uma lista vazia chamada <em>centros</em> para armazenar os pontos centrais das coordenadas de posição dos Arucos detectados.</p>
+</li>
+<li>
+<p><strong>distancia_aruco</strong>: Criamos outra lista vazia chamada <em>distancia_aruco</em> para armazenar as distâncias calculadas a partir dos vetores de translação dos marcadores Aruco.</p>
+</li>
+<li>
+<p><strong><em>grayColor</em></strong>: É aqui que realizamos a conversão da imagem colorida de entrada (cv_image) para uma imagem em tons de cinza utilizando a função cv2.cvtColor() da biblioteca OpenCV. </p>
+</li>
+</ul>
+<p>Agora observe que criamos um dicionário que irá conter os marcadores Aruco pré-definidos, utilizando a função <strong>aruco.getPredefinedDictionary()</strong> da biblioteca OpenCV.</p>
+<ul>
+<li><strong>Dicionário ArUco:</strong> A função <strong><em>cv2.aruco.getPredefinedDictionary()</em></strong> é usada para criar um dicionário contendo os marcadores Aruco pré-definidos, que são um conjuntos de marcadores com ID's únicos e padrões específicos. Esses dicionários são usados para detecção e estimativa de posição dos marcadores em imagens de entrada. O dicionário é criado com base em uma constante passada como parâmetro, que especifica o tipo de dicionário Aruco desejado.</li>
+</ul>
+<p>Por exemplo, no código abaixo, a linha <strong><em>dicionarioAruco = aruco.getPredefinedDictionary(aruco.DICT_6X6_250)</em></strong> cria um dicionário Aruco pré-definido com <em>250 marcadores de 6x6 bits</em>. </p>
+<div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">geraAruco</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cv_image</span><span class="p">):</span>   
+    <span class="n">centros</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">distancia_aruco</span><span class="o">=</span><span class="p">[]</span>
+    <span class="c1"># Gera mask Cinza</span>
+    <span class="n">grayColor</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
+    <span class="c1">#Gera Dicionario com Arucos</span>
+    <span class="n">dicionarioAruco</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">getPredefinedDictionary</span><span class="p">(</span><span class="n">aruco</span><span class="o">.</span><span class="n">DICT_6X6_250</span><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>
+<p><strong>cv2.aruco.detectMarkers(grayColor, dicionarioAruco)</strong>: Essa função realiza a detecção dos marcadores Aruco em uma imagem em tons de cinza. O primeiro parâmetro, grayColor, é a imagem em tons de cinza onde a detecção será realizada. O segundo parâmetro, dicionarioAruco,é o dicionário Aruco pré-definido que será utilizado para a detecção. Essa função retorna três valores: </p>
+</li>
+<li>
+<p><strong>cornersList:</strong> É uma lista contendo os pontos dos cantos dos marcadores detectados; </p>
+</li>
+<li>
+<p><strong>ids:</strong> É uma lista contendo os IDs dos marcadores detectados;</p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">cornersList</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">detectMarkers</span><span class="p">(</span><span class="n">grayColor</span><span class="p">,</span> <span class="n">dicionarioAruco</span><span class="p">)</span>
+</code></pre></div>
+<p>Na próxima etapa, é feita uma verificação pra identificar se foram encontrados marcadores Aruco na imagem, neste <em>if</em> verificamos se a lista ids não está vazia.</p>
+<div class="highlight"><pre><span></span><code><span class="k">if</span> <span class="n">ids</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+</code></pre></div>
+<p>Fazer esse tratamento previne que o seu código trave caso não exista ArUcos disponíveis no Frame analizado pela função.</p>
+<p>Fazemos um <strong><em>for</em></strong> nos ids detectados na lista ids, onde <em>i</em> é o índice do marcador atual. O condicional dentro do for é utilizado par verifica se o ID do marcador atual é maior do que 99. Se for, é considerado um marcador grande e são utilizados parâmetros diferentes para estimar sua posição.</p>
+<ul>
+<li><strong>cv2.aruco.estimatePoseSingleMarkers():</strong> é usada para estimar a pose (orientação e posição) de um marcador Aruco individual a partir dos pontos dos cantos (corners) detectados desse Aruco na imagem. Vamos analisar os parâmetros dessa função:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>  <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">ids</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">ids</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">99</span><span class="p">:</span>
+        <span class="n">ret</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">estimatePoseSingleMarkers</span><span class="p">(</span><span class="n">cornersList</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">19</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_distortion</span><span class="p">)</span>
+        <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">ret</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span>
+        <span class="n">distancia_aruco</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">tvec</span><span class="p">))</span>
+</code></pre></div>
+<ul>
+<li>
+<p><strong>cornersList[i]:</strong> É a lista de pontos dos cantos (corners) do marcador Aruco. <strong><em>[[x1,y1],[x2,y2]]</em></strong></p>
+</li>
+<li>
+<p><strong>19:</strong> É o tamanho do lado do Aruco, ou seja, o comprimento do lado do quadrado preto que o compõe.Esse valor é fornecido manualmente, e é importante que seja o mesmo valor utilizado durante a calibração da câmera para obter uma estimativa de pose precisa.</p>
+</li>
+<li>
+<p><strong>Camera_matrix:</strong> É a matriz de câmera que contém os parâmetros intrínsecos da câmera, como a distância focal e o centro óptico. Essa matriz é usada para corrigir as distorções da imagem e projetar os pontos 3D no espaço da câmera.</p>
+</li>
+<li>
+<p><strong>Camera_distortion:</strong> É o vetor de distorção da câmera que contém os coeficientes de distorção radial e tangencial da câmera. Esse vetor é usado em conjunto com a matriz de câmera para corrigir as distorções da imagem.</p>
+</li>
+<li>
+<p><strong>ret:</strong> É resultado da função cv2.aruco.estimatePoseSingleMarkers(), que é uma tupla contendo as informações de posição estimadas do Aruco. Essas informações incluem a matriz de rotação (rvec) e o vetor de translação (tvec) que representam a orientação e a posição do marcador no espaço 3D da câmera, respectivamente. Esses valores podem ser utilizados posteriormente para realizar a renderização de objetos virtuais ou para outros fins de aplicação. Mas a criterios de código, retorna uma tupla ret que contém duas informações: <strong><em>ret[0] é uma matriz de rotação 3x1 (rvec)</em></strong> e <strong><em>ret[1] é um vetor de translação 3x1 (tvec)</em></strong>. </p>
+</li>
+</ul>
+<p><strong>Vetor de Transalção e Vetor de rotação:</strong> A linha <strong><em>rvec, tvec = ret[0][0,0,:], ret[1][0,0,:]</em></strong> está pegando os valores de rotação (rvec) e translação (tvec):</p>
+<ul>
+<li>
+<p>Em <strong>ret[0][0,0,:]</strong> está acessando o valor da matriz de rotação (rvec) na posição [0,0,:]</p>
+</li>
+<li>
+<p>Em <strong>ret[1][0,0,:]</strong> está acessando o valor do vetor de translação (tvec) na posição [0,0,:]. </p>
+</li>
+</ul>
+<p>A notação <strong>":"</strong> é usada para indicar que queremos considerar todos os valores da última dimensão da matriz ou vetor, que no caso é a dimensão 3</p>
+<ul>
+<li>
+<p><strong>distancia_aruco.append(np.linalg.norm(tvec))</strong> está calculando a norma Euclidiana do vetor de translação tvec usando a função np.linalg.norm() e adicionando o resultado à lista distancia_aruco.  </p>
+</li>
+<li>
+<p><strong>np.linalg.norm():</strong> É uma função da biblioteca NumPy que calcula a norma Euclidiana de um vetor em um espaço n-dimensional. A norma Euclidiana é a medida do módulo de um vetor, calculada como a raiz quadrada da soma dos quadrados dos componentes do vetor. </p>
+</li>
+</ul>
+<div class="highlight"><pre><span></span><code><span class="n">v</span> <span class="o">=</span> <span class="n">ai</span><span class="o">+</span><span class="n">bj</span> <span class="p">,</span> <span class="n">norma</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">a</span><span class="err">²</span><span class="o">+</span><span class="n">b</span><span class="err">²</span><span class="p">)</span>
+</code></pre></div>
+<h2 id="resumindo">Resumindo:</h2>
+<ul>
+<li>tvec é um vetor de translação estimado para um Aruco na posição 3D da câmera. A norma Euclidiana desse vetor representa a módulo ou distância desse vetor em relação à origem do sistema de coordenadas 3D da câmera. Portanto, np.linalg.norm(tvec) está calculando a distância do aruco em relação à câmera no espaço 3D. </li>
+</ul>
+<p>A mesma ideia do que foi explicada no if se aplica aqui no else, porém para ids menores que 99</p>
+<div class="highlight"><pre><span></span><code><span class="k">else</span><span class="p">:</span> 
+    <span class="n">ret</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">estimatePoseSingleMarkers</span><span class="p">(</span><span class="n">cornersList</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mi">6</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_distortion</span><span class="p">)</span>
+    <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span> <span class="o">=</span> <span class="n">ret</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:],</span> <span class="n">ret</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,:]</span>
+    <span class="n">distancia_aruco</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">tvec</span><span class="p">))</span>
+</code></pre></div>
+<p>Na linha seguinte, iremos percorrer a lista de <strong>cantos do aruco</strong> para calcular o seu respectivo <strong>centro</strong> e guarda na lista de centro, após fazer a média entre esses 2 pontos <strong>[[x1,y1],[x2,y2]]</strong>.</p>
+<div class="highlight"><pre><span></span><code><span class="k">for</span> <span class="n">corners</span> <span class="ow">in</span> <span class="n">cornersList</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">corner</span> <span class="ow">in</span> <span class="n">corners</span><span class="p">:</span>
+        <span class="n">centros</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">corner</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</code></pre></div>
+<p>As demais linhas do código são responsáveis por desenhar na tela a identificação e posição do aruco, esses comandos são apenas para visualização.</p>
+<div class="highlight"><pre><span></span><code><span class="c1">#-- Desenha um retanculo e exibe Id do marker encontrado</span>
+<span class="n">aruco</span><span class="o">.</span><span class="n">drawDetectedMarkers</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="n">cornersList</span><span class="p">,</span> <span class="n">ids</span><span class="p">)</span> 
+<span class="n">cv2</span><span class="o">.</span><span class="n">drawFrameAxes</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_matrix</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">camera_distortion</span><span class="p">,</span> <span class="n">rvec</span><span class="p">,</span> <span class="n">tvec</span> <span class="p">,</span><span class="mf">0.03</span><span class="p">)</span>
+<span class="c1">#-- Exibe tvec --&gt; vetor de tanslação em x y z</span>
+<span class="n">str_position</span> <span class="o">=</span> <span class="s2">&quot;Marker x=</span><span class="si">%4.0f</span><span class="s2">  y=</span><span class="si">%4.0f</span><span class="s2">  z=</span><span class="si">%4.0f</span><span class="s2">&quot;</span><span class="o">%</span><span class="p">(</span><span class="n">tvec</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">tvec</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">tvec</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span>
+<span class="c1">#-- Desenha na imagem o vetor de tanslação em x y z</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">putText</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="n">str_position</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">),</span> <span class="n">cv2</span><span class="o">.</span><span class="n">FONT_HERSHEY_PLAIN</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">1</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">LINE_AA</span><span class="p">)</span>
+<span class="c1"># Desenha a linha referencia em X</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="p">(</span><span class="n">cv_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">cv_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span><span class="p">),</span> <span class="p">((</span><span class="n">cv_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">50</span><span class="p">),(</span><span class="n">cv_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span><span class="p">)),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span> 
+<span class="c1"># Desenha a linha referencia em Y</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">line</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="p">(</span><span class="n">cv_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span><span class="p">,</span><span class="n">cv_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="n">cv_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span><span class="p">,(</span><span class="n">cv_image</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">//</span><span class="mi">2</span> <span class="o">+</span> <span class="mi">50</span><span class="p">)),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">255</span><span class="p">,</span><span class="mi">0</span><span class="p">),</span> <span class="mi">5</span><span class="p">)</span> 
+
+<span class="c1"># Exibe tela</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">imshow</span><span class="p">(</span><span class="s2">&quot;Camera&quot;</span><span class="p">,</span> <span class="n">cv_image</span><span class="p">)</span>
+<span class="n">cv2</span><span class="o">.</span><span class="n">waitKey</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</code></pre></div>
+<h1 id="hora-de-codar">Hora de codar!</h1>
+<p><img alt="Untitled" src="imgs/Untitled2.png" /></p>
+<ol>
+<li>Inicialize o Gazebo com a pista_s2.launch <strong>se estiver usando o robô simulado</strong></li>
+</ol>
+<div class="highlight"><pre><span></span><code>roslaunch<span class="w"> </span>my_simulation<span class="w"> </span>pista_s2.launch
+</code></pre></div>
+<p><img alt="Untitled" src="imgs/Untitled.png" /></p>
+<p>Os exercícios abaixo ajudam a praticar o uso de ArUco, mas não são obrigatórios. </p>
+<div class="admonition exercise self-progress" data-slug="projeto/exemplos/aruco/exercise_1" id="exercise_1_0">
+<p class="admonition-title">Exercício 1</p>
+<form class="exercise-form">
+<p>Estude o código <a href="aruco_3d.py">aruco_3d.py</a>, faça as modificações necessárias para que o robô gire em torno de si mesmo e seja capaz de contar quantos arucos de Id's diferentes estão no campo de visão de robô no cenário <strong>pista_s2.launch</strong>.</p>
+<p>No seu terminal será exibida a lista com todos os arucos que o robô detectou, e no display da imagem, os valores de distância do primeiro aruco da lista.</p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Enviar" value="Marcar como feito" />
+</div>
+</form>
+</div>
+<div class="admonition exercise self-progress" data-slug="projeto/exemplos/aruco/exercise_2" id="exercise_2_0">
+<p class="admonition-title">Exercício 2</p>
+<form class="exercise-form">
+<p>Estude o código exemplo, modifique o programa para que:
+- O robô encontra um ArUco
+- O robô se aproxima do ArUco, e se mantém a aproximadamente 1m do primeiro aruco encontrado.</p>
+<div class="form-elements">
+<input type="hidden" name="data" value="OK" />
+<input class="ah-button ah-button--primary" type="submit" name="Enviar" value="Marcar como feito" />
+</div>
+</form>
+</div>
+<p>Divirta-se!</p>
+
+
+</section>
+          
+        
+      </main>
+      <footer class="ah-footer ah-typeset">
+        <div class="ah-footer-nav">
+          
+            <a href="../../"
+               class="ah-prev"
+               title="Missão na 404">
+              <span class="nav-label">Anterior</span>
+              <span class="nav-title">Missão na 404</span>
+            </a>
+          
+          
+        </div>
+      </footer>
+    </div>
+    
+      
+    
+  </body>
+</html>
