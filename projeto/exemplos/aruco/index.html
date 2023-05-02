@@ -557,10 +557,14 @@ Uma das abordagens mais populares é o uso de marcadores binários. O principal 
 <p>Se estiver usando o simulador, certifique-se de que o seu arquivo <strong><em>robotica.sh</em></strong> está configurado corretamente para se conectar ao robô simulado (Se não sabe do que eu estou falando, <a href="https://insper.github.io/robotica-computacional/guias-infra/robo-simulado/">volte ao guia robo-simulado</a>).</p>
 <p>Se estiver usando o robô físico, configure corretamente o arquivo <strong><em>robotica.sh</em></strong> (veja o <a href="https://insper.github.io/robotica-computacional/guias-infra/turtlebot3/">guia robo-fisico</a> se tiver dúvidas sobre como se conectar ao robô fisico)</p>
 <h2 id="aruco-3d">Aruco 3D</h2>
-<p>Utilizando a técnica de marcadores aruco 3D podemos obter os corners que são as coordenadas dos “cantos” do aruco e os IDs dos arucos, também conseguimos calcular o vetor de transalação e o vetor de rotação do aruco em relação ao robô, com essas informações é possível extrair a distância euclidiana e a distância focal do aruco em relação ao robô, essas implementações estão disponíveis para você no código exemplo <a href="aruco_3d.py">aruco_3d.py</a>, para executar:</p>
+<p>Utilizando a técnica de marcadores aruco 3D podemos obter os corners que são as coordenadas dos “cantos” do aruco e os IDs dos arucos, também conseguimos calcular o vetor de transalação e o vetor de rotação do aruco em relação ao robô, com essas informações é possível extrair a distância euclidiana e a distância focal do aruco em relação ao robô, essas implementações estão disponíveis para você no código exemplo <a href="aruco_3d.py">aruco_3d.py</a>. Você precisará baixar os seguintes arquivos e colocá-los também na pasta <em>scripts</em>:</p>
+<ul>
+<li><a href="cameraDistortion_realsense.txt">cameraDistortion_realsense.txt</a></li>
+<li><a href="cameraMatrix_realsense.txt">cameraMatrix_realsense.txt</a></li>
+</ul>
 <p>Certifique-se de que o terminal está aberto na mesma página que está o código, usando o comando “ls” é possível listar o conteúdo do diretório, é preciso que os arquivos abaixo estejam na pasta.</p>
 <div class="highlight"><pre><span></span><code>$&gt;<span class="w"> </span>ls
-aruco_3d.py<span class="w"> </span>cameraDistortion_realsense.txt<span class="w"> </span>cameraMatrix_realsense.tx*
+aruco_3d.py<span class="w"> </span>cameraDistortion_realsense.txt<span class="w"> </span>cameraMatrix_realsense.txt
 </code></pre></div>
 <p><img alt="Untitled" src="imgs/Untitled1.png" /></p>
 <p>Execute o arquivo <code>aruco_3d.py</code> com a simulação da pista usada nas atividades rodando.</p>
