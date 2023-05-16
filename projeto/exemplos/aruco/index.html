@@ -603,14 +603,14 @@ aruco_3d.py<span class="w"> </span>cameraDistortion_realsense.txt<span class="w"
 <ul>
 <li><strong>Dicionário ArUco:</strong> A função <strong><em>cv2.aruco.getPredefinedDictionary()</em></strong> é usada para criar um dicionário contendo os marcadores Aruco pré-definidos, que são um conjuntos de marcadores com ID's únicos e padrões específicos. Esses dicionários são usados para detecção e estimativa de posição dos marcadores em imagens de entrada. O dicionário é criado com base em uma constante passada como parâmetro, que especifica o tipo de dicionário Aruco desejado.</li>
 </ul>
-<p>Por exemplo, no código abaixo, a linha <strong><em>dicionarioAruco = aruco.getPredefinedDictionary(aruco.DICT_6X6_250)</em></strong> cria um dicionário Aruco pré-definido com <em>250 marcadores de 6x6 bits</em>. </p>
+<p>Por exemplo, no código abaixo, a linha <strong><em>dicionarioAruco = aruco.getPredefinedDictionary(aruco.DICT_6X6_1000)</em></strong> cria um dicionário Aruco pré-definido com <em>250 marcadores de 6x6 bits</em>. </p>
 <div class="highlight"><pre><span></span><code><span class="k">def</span> <span class="nf">geraAruco</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">cv_image</span><span class="p">):</span>   
     <span class="n">centros</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">distancia_aruco</span><span class="o">=</span><span class="p">[]</span>
     <span class="c1"># Gera mask Cinza</span>
     <span class="n">grayColor</span> <span class="o">=</span> <span class="n">cv2</span><span class="o">.</span><span class="n">cvtColor</span><span class="p">(</span><span class="n">cv_image</span><span class="p">,</span> <span class="n">cv2</span><span class="o">.</span><span class="n">COLOR_BGR2GRAY</span><span class="p">)</span>
     <span class="c1">#Gera Dicionario com Arucos</span>
-    <span class="n">dicionarioAruco</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">getPredefinedDictionary</span><span class="p">(</span><span class="n">aruco</span><span class="o">.</span><span class="n">DICT_6X6_250</span><span class="p">)</span>
+    <span class="n">dicionarioAruco</span> <span class="o">=</span> <span class="n">aruco</span><span class="o">.</span><span class="n">getPredefinedDictionary</span><span class="p">(</span><span class="n">aruco</span><span class="o">.</span><span class="n">DICT_6X6_1000</span><span class="p">)</span>
 </code></pre></div>
 <ul>
 <li>
