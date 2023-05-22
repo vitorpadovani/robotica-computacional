@@ -580,13 +580,17 @@ catkin_make
 <p>Para completar uma missão você deve:</p>
 <ul class="task-list">
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> capturar a tela do robô realizando a missão no simulador </li>
-<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> filmar o robô realizando a missão na pista da sala<ul>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <strong>Obrigatório para a Missão D</strong>: filmar o robô realizando a missão na pista da sala<ul>
 <li>para filmar é preciso pedir a preparação da pista para a equipe de técnicos. Isso garante que todos terão condições parecidas nas missões.</li>
 </ul>
 </li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> cada missão demora menos de 15 minutos para ser completada</li>
 </ul>
 <p>Missões podem ser completadas durante o andamento do projeto. É só pedir a validação da parte dos requisitos de software antes de gravar. </p>
+<div class="admonition atenção">
+<p class="admonition-title">Atenção</p>
+<p>Se uma missão só for completada no simulador ela valerá 50% da nota. <strong>A missão D é obrigatório rodar no robô real</strong>. </p>
+</div>
 <h3 id="missao-d">Missão <strong>D</strong></h3>
 <p>Essa missão é a mais simples do projeto e envolve aplicar diretamente os conceitos trabalhados na APS04. Os seguintes passos devem ser realizados:</p>
 <ol>
@@ -597,6 +601,10 @@ catkin_make
 </ol>
 <p><strong>Essa missão não tem requisitos de projeto de software</strong></p>
 <p><strong>Nota final desta missão:</strong> 3,0</p>
+<div class="admonition atenção">
+<p class="admonition-title">Atenção</p>
+<p>É obrigatório rodar essa missão no robô real</p>
+</div>
 <h3 id="missao-c">Missão <strong>C</strong></h3>
 <p>A missão <strong>C</strong> envolve agora usar a garra para pegar o creeper (e possivelmente o LiDAR para medir a distância até ele). </p>
 <ol>
@@ -609,6 +617,8 @@ catkin_make
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> o código deve usar classes</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> o código deve usar máquina de estados</li>
 <li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> é usado controlo proporcional para o robô seguir a linha</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> existe um subscriber específico para a leitura do aruco</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> existe um subscriber específico para a leitura da mobileNet (mesmo que não use)</li>
 </ul>
 <p><strong>Nota final desta missão:</strong> 5,0</p>
 <h3 id="missao-c_1">Missão <strong>C+</strong></h3>
