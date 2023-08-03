@@ -185,6 +185,14 @@
   
 
       
+        
+  
+    <li>
+      <a href="../git-e-github/pull_template/">Pull changes from a template repository</a>
+    </li>
+  
+
+      
     </ul>
   </li>
 
@@ -608,14 +616,16 @@ A partir de agora todas as vezes que for pedida a senha de usuário você deve u
 <p>Em nosso SSD você verá a tela do Terminator após usar este atalho. Na imagem abaixo você verá o terminator aberto e o primeiro comando que iremos utilizar. </p>
 <p><img alt="Untitled" src="imgs/img13.png" width="800" /></p>
 <p>O primeiro comando que iremos utilizar,  <code>sudo apt update</code>,  é dividido em três partes. A primeira palavra <strong>sudo</strong> diz ao sistema que você usará permissão de <strong>root</strong> (administrador do sistema) para executar o comando a seguir, o comando <strong>apt</strong> chama o gerenciador de pacotes do ubuntu, que espera uma sequência de comandos, e por fim a palavra <strong>update</strong> que diz ao apt que precisamos atualizar as bases dos repositórios para saber se temos alguma atualização. Como estamos usando permissão de root, pedirá a senha de usuário a seguir. </p>
-<p>Com a mesma premissa, vamos atualizar os pacotes que ele encontrou com novas versões. para isto utilize o comando <code>sudo apt upgrade</code>.  Este comando perguntará, a cada pacote, se você quer ou não instalar, basta teclar ENTER se quiser instalar. Se você não quer confirmar pacote a pacote, pode acrescentar o “-y” no comando, já enviando antecipadamente o “yes”, então comando ficaria assim: <strong>sudo apt upgrade -y</strong>.</p>
-<p>Podemos concatenar os dois comandos utilizando <code>&amp;&amp;</code> no terminal. Desta forma podemos executar o update e o upgrade na mesma linha, como segue: <code>sudo apt update &amp;&amp; sudo apt upgrade -y</code>.</p>
+<p>Com a mesma premissa, vamos atualizar os pacotes que ele encontrou com novas versões. para isto utilize o comando <code>sudo apt upgrade</code>.  Este comando perguntará, a cada pacote, se você quer ou não instalar, basta teclar ENTER se quiser instalar. Se você não quer confirmar pacote a pacote, pode acrescentar o “-y” no comando, já enviando antecipadamente o “yes”, então comando ficaria assim: <code>sudo apt upgrade -y</code>.</p>
+<p>Podemos concatenar os dois comandos utilizando <code>&amp;&amp;</code> no terminal. Desta forma podemos executar o update e o upgrade na mesma linha, como segue: </p>
+<div class="highlight"><pre><span></span><code>sudo<span class="w"> </span>apt<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>sudo<span class="w"> </span>apt<span class="w"> </span>upgrade<span class="w"> </span>-y
+</code></pre></div>
 <div class="admonition dica">
 <p class="admonition-title">Dica</p>
 <p>Use o TAB para autocompletar os comandos no terminal</p>
 </div>
 <h2 id="finalizando">Finalizando</h2>
-<p>Se você conseguiu seguir todos os passos até agora, o seu SSD já está pronto para ser utilizado. Como você utilizará linux em outras etapas do curso, a dica é usar o SSD para tudo neste semestre.</p>
+<p>Se você conseguiu seguir todos os passos até agora, o seu SSD já está pronto para ser utilizado. Como você utilizará linux em outras etapas do curso, a dica <strong>é usar o SSD para tudo neste semestre</strong>.</p>
 
 
 </section>
